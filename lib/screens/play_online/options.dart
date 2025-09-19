@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+class OnlinePlayOptions extends StatelessWidget {
+  const OnlinePlayOptions({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +33,7 @@ class HomeScreen extends StatelessWidget {
             // Buttons
             _buildMenuButton(
               context,
-              "Play Online",
+              "Create Room",
               Icons.public,
               Colors.green,
             ),
@@ -42,14 +42,14 @@ class HomeScreen extends StatelessWidget {
             const SizedBox(height: 20),
             _buildMenuButton(
               context,
-              "Play Bluetooth",
+              "Join Room",
               Icons.bluetooth,
               Colors.blue,
             ),
             const SizedBox(height: 20),
             _buildMenuButton(
               context,
-              "Exit",
+              "Play Random",
               Icons.exit_to_app,
               Colors.red,
               exit: true,
@@ -80,20 +80,16 @@ class HomeScreen extends StatelessWidget {
           elevation: 10,
         ),
         onPressed: () {
-          if (exit) {
-            // Exit app
+            if (text == "Create Room") {
+            Navigator.pushNamed(context, '/create_room');
+          } else if (text == "Join Room") {
+            Navigator.pushNamed(context, '/join_room');
+          } else if (text == "Play Random") {
+            Navigator.pushNamed(context, '/random_play');
+          } else if (exit) {
             Future.delayed(const Duration(milliseconds: 100), () {
               Navigator.of(context).pop();
             });
-          } else {
-            // Navigate to respective screens later
-            if (text == "Play Online") {
-              Navigator.pushNamed(context, '/play_online_options');
-            } else if (text == "Play Local") {
-              // Navigator.pushNamed(context, '/play_local'); // Placeholder
-            } else if (text == "Play Bluetooth") {
-              // Navigator.pushNamed(context, '/play_bluetooth'); // Placeholder
-            }
           }
         },
         icon: Icon(icon, size: 28, color: Colors.white),
