@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -83,16 +84,18 @@ class HomeScreen extends StatelessWidget {
           if (exit) {
             // Exit app
             Future.delayed(const Duration(milliseconds: 100), () {
-              Navigator.of(context).pop();
+              //exit application
+              SystemChannels.platform.invokeMethod('SystemNavigator.pop');
+
             });
           } else {
             // Navigate to respective screens later
             if (text == "Play Online") {
               Navigator.pushNamed(context, '/play_online_options');
             } else if (text == "Play Local") {
-              // Navigator.pushNamed(context, '/play_local'); // Placeholder
+               Navigator.pushNamed(context, '/play_local'); // Placeholder
             } else if (text == "Play Bluetooth") {
-              // Navigator.pushNamed(context, '/play_bluetooth'); // Placeholder
+             Navigator.pushNamed(context, '/play_bluetooth'); // Placeholder
             }
           }
         },

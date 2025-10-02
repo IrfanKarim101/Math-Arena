@@ -1,9 +1,20 @@
 import 'package:flutter/material.dart';
 import 'dart:typed_data';
 import 'package:nearby_connections/nearby_connections.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class BluetoothService {
   final Strategy strategy = Strategy.P2P_STAR; // one host, many clients
+ 
+Future<void> requestBluetoothPermissions() async {
+  await [
+    Permission.bluetooth,
+    Permission.bluetoothAdvertise,
+    Permission.bluetoothConnect,
+    Permission.bluetoothScan,
+    Permission.location,
+  ].request();
+}
 
   // Start advertising as host
   Future<void> startHosting(

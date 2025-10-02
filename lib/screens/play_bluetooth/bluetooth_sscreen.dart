@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:math_arena/services/bluetooth_service.dart';
 
-
 class BluetoothScreen extends StatefulWidget {
   const BluetoothScreen({super.key});
 
@@ -28,6 +27,12 @@ class _BluetoothScreenState extends State<BluetoothScreen> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    btService.requestBluetoothPermissions();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text("Math Arena - Bluetooth")),
@@ -35,16 +40,25 @@ class _BluetoothScreenState extends State<BluetoothScreen> {
         children: [
           ElevatedButton(
             onPressed: () {
-              btService.startHosting(
-                "HostPlayer",
-                (id, name) => appendLog("Request from $name"),
-                (id) {
-                  connectedId = id;
-                  appendLog("Connected: $id");
-                },
-                (id) => appendLog("Disconnected: $id"),
-              );
+              try {
+                btService.startHosting(
+                  "HostPlayer",
+                  (id, name) => appendLog("Request from $name"),
+                  (id) {
+                    connectedId = id;
+                    appendLog("Connected: $id");
+                  },
+                  (id) => appendLog("Disconnected: $id"),
+                );
+              } catch (e) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                      content: Text("Bluetooth is off or permissions not granted")),
+                );
+                appendLog("Error starting hosting: $e");
+              }
             },
+
             child: const Text("Start Hosting"),
           ),
           ElevatedButton(
