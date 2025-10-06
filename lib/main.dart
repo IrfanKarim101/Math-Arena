@@ -8,6 +8,7 @@ import 'package:math_arena/screens/play_online/join_room.dart';
 import 'package:math_arena/screens/play_online/options.dart';
 import 'package:math_arena/screens/play_online/random_match.dart';
 import 'package:math_arena/bloc/room_bloc.dart';
+import 'package:math_arena/screens/widgets/answering_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -27,7 +28,19 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'Math Arena',
         theme: ThemeData(primarySwatch: Colors.blue),
-        home: HomeScreen(),
+        home: AnsweringScreen(
+          //for testing
+          playerName: 'Player1',
+          question: '5 + 3',
+          answers: ['6', '7', '8', '9'],
+          opponentName: 'Player2',
+          opponentScore: int.fromEnvironment('0'),
+          playerScore: int.fromEnvironment('0'),
+          onAnswerSelected: (int index) {
+            // Handle answer selection
+            print('Selected answer index: $index');
+          },
+        ),
         routes: {
           // '/': (context) => const HomeScreen(),
           '/play_online_options': (context) => const OnlinePlayOptions(),
